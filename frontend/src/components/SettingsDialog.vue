@@ -23,6 +23,7 @@
           {{ t('settings.notesTitle') }}
         </div>
         <ul class="text-xs text-neutral-500 dark:text-neutral-400 space-y-1 leading-relaxed">
+          <li>• {{ t('settings.noteUninstalled') }}</li>
           <li>• {{ t('settings.noteNotUninstalled') }}</li>
           <li>• {{ t('settings.noteRunningApps') }}</li>
         </ul>

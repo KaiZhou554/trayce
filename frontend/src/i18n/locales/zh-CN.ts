@@ -46,9 +46,10 @@ export default {
   },
   settings: {
     language: '语言 / Language',
-    notesTitle: '删掉……会发生什么？',
-    noteNotUninstalled: '未卸载的软件：软件下次运行会自己创建',
-    noteRunningApps: '正在运行的软件：软件托盘会被折叠',
+    notesTitle: '删除记录会有什么影响？',
+    noteUninstalled: '已卸载的软件：删除记录非常安全，不会有任何影响',
+    noteNotUninstalled: '未卸载的软件：下次启动时会自动重新创建记录',
+    noteRunningApps: '正在运行的软件：其托盘图标会被折叠隐藏',
     about: '关于',
     description: 'Windows 通知区域图标记录管理器',
   },

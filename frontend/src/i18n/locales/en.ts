@@ -46,9 +46,10 @@ export default {
   },
   settings: {
     language: 'Language',
-    notesTitle: 'What happens if I delete an entry?',
-    noteNotUninstalled: 'Not uninstalled software: it will recreate the entry on its next run',
-    noteRunningApps: 'Running apps: their tray icon will be collapsed',
+    notesTitle: 'What happens when you delete a record?',
+    noteUninstalled: 'Uninstalled software: deleting its record is completely safe',
+    noteNotUninstalled: 'Not uninstalled software: the record is recreated automatically on its next launch',
+    noteRunningApps: 'Running apps: their tray icon will be collapsed (hidden)',
     about: 'About',
     description: 'Windows notification area icon records manager',
   },
