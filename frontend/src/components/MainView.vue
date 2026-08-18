@@ -6,6 +6,7 @@
       @minimize="WindowMinimise"
       @maximize="toggleMaximize"
       @close="Quit"
+      @open-settings="settingsOpen = true"
     />
 
     <!-- 工具栏：搜索 + 过滤 -->
@@ -40,10 +41,11 @@
       :title="dialog.title"
       :message="dialog.message"
       :confirm-text="dialog.confirmText"
-      :danger="dialog.danger"
       @confirm="onDialogConfirm"
       @cancel="dialog.open = false"
     />
+
+    <SettingsDialog :show="settingsOpen" @update:show="settingsOpen = $event" />
   </div>
 </template>
 
@@ -58,6 +60,7 @@ import AppIcon from '../assets/appicon.png'
 import TitleBar from './TitleBar.vue'
 import TrayIconList from './TrayIconList.vue'
 import ConfirmDialog from './ConfirmDialog.vue'
+import SettingsDialog from './SettingsDialog.vue'
 
 const message = useMessage()
 
@@ -65,6 +68,7 @@ const all = ref<TrayIconEntry[]>([])
 const query = ref('')
 const filter = ref<'all' | IconStatus>('all')
 const isMaximized = ref(false)
+const settingsOpen = ref(false)
 const selectedIds = ref<Set<string>>(new Set())
 const listRef = ref<InstanceType<typeof TrayIconList> | null>(null)
 const canUndo = ref(true)
@@ -109,14 +113,12 @@ const dialog = ref<{
   title: string
   message: string
   confirmText: string
-  danger: boolean
   action: 'delete' | 'undo'
-}>({ open: false, title: '', message: '', confirmText: '', danger: false, action: 'delete' })
+}>({ open: false, title: '', message: '', confirmText: '', action: 'delete' })
 
 const askDelete = () => {
   dialog.value = {
     open: true,
-    danger: true,
     title: '确认删除所选记录',
     message: `将删除 ${selectedIds.value.size} 条通知区域图标记录。这只会删除 Windows 保存的通知区域图标记录，不会卸载软件，也不会删除程序文件。`,
     confirmText: '删除记录',
@@ -127,7 +129,6 @@ const askDelete = () => {
 const askUndo = () => {
   dialog.value = {
     open: true,
-    danger: false,
     title: '撤销上次清理',
     message: '将根据最近一次备份，恢复被清理的通知区域图标记录。',
     confirmText: '恢复',
