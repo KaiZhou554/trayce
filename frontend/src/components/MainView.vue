@@ -11,14 +11,14 @@
 
     <!-- 工具栏：搜索 + 过滤 -->
     <div class="px-4 pt-3 pb-2 flex flex-col gap-2 shrink-0">
-      <n-input v-model:value="query" size="large" clearable placeholder="搜索名称、路径或 ID…">
+      <n-input v-model:value="query" size="large" clearable :placeholder="t('search.placeholder')">
         <template #prefix>
           <Search24Regular class="w-4 h-4 text-neutral-400" />
         </template>
       </n-input>
       <n-radio-group :value="filter" size="small" @update:value="onFilterChange">
-        <n-radio-button v-for="t in tabOptions" :key="t.value" :value="t.value">
-          {{ t.label }}
+        <n-radio-button v-for="tab in tabOptions" :key="tab.value" :value="tab.value">
+          {{ tab.label }}
         </n-radio-button>
       </n-radio-group>
     </div>
@@ -29,10 +29,10 @@
     <div class="px-4 py-3 shrink-0 flex items-center justify-between gap-3 border-t border-black/5 dark:border-white/10">
       <n-button :disabled="!canUndo" @click="askUndo">
         <template #icon><ArrowUndo24Regular class="w-4 h-4" /></template>
-        撤销上次清理
+        {{ t('actions.undo') }}
       </n-button>
       <n-button type="error" :disabled="selectedIds.size === 0" @click="askDelete">
-        删除所选记录（{{ selectedIds.size }}）
+        {{ t('actions.deleteSelected') }}（{{ selectedIds.size }}）
       </n-button>
     </div>
 
@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { useMessage, NButton, NInput, NRadioGroup, NRadioButton } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
 import { WindowMinimise, WindowMaximise, WindowUnmaximise, WindowIsMaximised, Quit } from '../../wailsjs/runtime/runtime'
 import { Scan, DeleteEntries, UndoLastCleanup } from '../../wailsjs/go/main/App'
 import { Search24Regular, ArrowUndo24Regular } from '@vicons/fluent'
@@ -62,6 +63,7 @@ import TrayIconList from './TrayIconList.vue'
 import ConfirmDialog from './ConfirmDialog.vue'
 import SettingsDialog from './SettingsDialog.vue'
 
+const { t } = useI18n()
 const message = useMessage()
 
 const all = ref<TrayIconEntry[]>([])
@@ -77,10 +79,10 @@ const countOf = (key: string) =>
   key === 'all' ? all.value.length : all.value.filter(e => e.status === key).length
 
 const tabOptions = computed(() => [
-  { label: `全部 (${countOf('all')})`, value: 'all' },
-  { label: `失效 (${countOf('missing')})`, value: 'missing' },
-  { label: `正常 (${countOf('valid')})`, value: 'valid' },
-  { label: `特殊 (${countOf('special')})`, value: 'special' },
+  { label: `${t('tabs.all')} (${countOf('all')})`, value: 'all' },
+  { label: `${t('tabs.missing')} (${countOf('missing')})`, value: 'missing' },
+  { label: `${t('tabs.valid')} (${countOf('valid')})`, value: 'valid' },
+  { label: `${t('tabs.special')} (${countOf('special')})`, value: 'special' },
 ])
 
 const onFilterChange = (v: string) => {
@@ -119,9 +121,9 @@ const dialog = ref<{
 const askDelete = () => {
   dialog.value = {
     open: true,
-    title: '确认删除所选记录',
-    message: `将删除 ${selectedIds.value.size} 条通知区域图标记录。这只会删除 Windows 保存的通知区域图标记录，不会卸载软件，也不会删除程序文件。`,
-    confirmText: '删除记录',
+    title: t('dialog.deleteTitle'),
+    message: t('dialog.deleteMessage', { n: selectedIds.value.size }),
+    confirmText: t('dialog.deleteConfirm'),
     action: 'delete',
   }
 }
@@ -129,9 +131,9 @@ const askDelete = () => {
 const askUndo = () => {
   dialog.value = {
     open: true,
-    title: '撤销上次清理',
-    message: '将根据最近一次备份，恢复被清理的通知区域图标记录。',
-    confirmText: '恢复',
+    title: t('dialog.undoTitle'),
+    message: t('dialog.undoMessage'),
+    confirmText: t('dialog.undoConfirm'),
     action: 'undo',
   }
 }
@@ -141,10 +143,10 @@ const onDialogConfirm = async () => {
   try {
     if (dialog.value.action === 'delete') {
       const res = await DeleteEntries([...selectedIds.value])
-      message.success(`已删除 ${res.deleted} 条记录。\nWindows 设置页面可能需要重新打开才能看到变化。`)
+      message.success(t('message.deleted', { n: res.deleted }))
     } else {
       const res = await UndoLastCleanup()
-      message.success(res.deleted > 0 ? `已恢复 ${res.deleted} 条记录。` : '没有可撤销的记录。')
+      message.success(res.deleted > 0 ? t('message.restored', { n: res.deleted }) : t('message.nothingToUndo'))
     }
     await refresh()
   } catch (err) {

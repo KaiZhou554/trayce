@@ -14,12 +14,3 @@ export interface DeleteResult {
   deleted: number
   backupPath: string
 }
-
-export const STATUS_LABEL: Record<IconStatus, string> = {
-  valid: '正常',
-  missing: '路径失效',
-  special: 'Windows 系统路径',
-  unknown: '未知',
-}
-
-export const STATUS_ORDER: IconStatus[] = ['missing', 'valid', 'special', 'unknown']

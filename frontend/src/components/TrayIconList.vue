@@ -19,18 +19,18 @@
               {{ displayName(entry) }}
             </span>
             <n-tag size="small" :type="tagType(entry.status)" :bordered="false" class="shrink-0">
-              {{ STATUS_LABEL[entry.status] }}
+              {{ t(`status.${entry.status}`) }}
             </n-tag>
           </div>
           <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate" :title="entry.executablePath">
-            {{ entry.executablePath || '(无路径)' }}
+            {{ entry.executablePath || t('list.noPath') }}
             <span v-if="entry.publisher" class="text-neutral-400 dark:text-neutral-500"> · {{ entry.publisher }}</span>
           </div>
         </div>
       </div>
 
       <div v-if="entries.length === 0" class="text-center text-sm text-neutral-400 py-16">
-        没有匹配的记录
+        {{ t('list.empty') }}
       </div>
     </div>
   </n-scrollbar>
@@ -39,7 +39,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { NCheckbox, NScrollbar, NTag } from 'naive-ui'
-import { STATUS_LABEL, type IconStatus, type TrayIconEntry } from '../types'
+import { useI18n } from 'vue-i18n'
+import type { IconStatus, TrayIconEntry } from '../types'
+
+const { t } = useI18n()
 
 defineProps<{ entries: TrayIconEntry[] }>()
 const emit = defineEmits<{ (e: 'selection', ids: Set<string>): void }>()

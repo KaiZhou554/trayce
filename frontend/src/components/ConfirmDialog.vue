@@ -11,7 +11,7 @@
     <p class="text-sm text-neutral-600 dark:text-neutral-300 leading-relaxed">{{ message }}</p>
     <template #footer>
       <div class="flex justify-end gap-2">
-        <n-button @click="$emit('cancel')">取消</n-button>
+        <n-button @click="$emit('cancel')">{{ t('common.cancel') }}</n-button>
         <n-button type="error" @click="$emit('confirm')">{{ confirmText }}</n-button>
       </div>
     </template>
@@ -20,6 +20,9 @@
 
 <script setup lang="ts">
 import { NButton, NModal } from 'naive-ui'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 defineProps<{
   open: boolean

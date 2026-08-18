@@ -6,7 +6,7 @@
     <div style="--wails-draggable:no-drag" class="ml-auto flex items-center gap-1">
       <button
         class="dark:text-white w-8 h-8 flex items-center justify-center rounded-sm hover:bg-neutral-400/30 dark:hover:bg-neutral-900/30 active:bg-neutral-400/40 dark:active:bg-neutral-900/40 text-lg leading-none transition-colors"
-        title="设置"
+        :title="t('common.settings')"
         @click="$emit('openSettings')"
       >
         <Icon><MoreHorizontal20Regular /></Icon>
@@ -47,6 +47,9 @@ import {
   MoreHorizontal20Regular,
 } from '@vicons/fluent'
 import { Icon } from '@vicons/utils'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 defineProps<{
   isMaximized: boolean

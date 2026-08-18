@@ -12,7 +12,8 @@
     "@tailwindcss/vite": "^4.2.2",
     "naive-ui": "^2.45.0",
     "tailwindcss": "^4.2.2",
-    "vue": "^3.5.32"
+    "vue": "^3.5.32",
+    "vue-i18n": "^11.4.8"
   },
   "devDependencies": {
     "@types/node": "^24.12.2",
