@@ -63,7 +63,7 @@ const { t } = useI18n()
 defineProps<{ show: boolean }>()
 const emit = defineEmits<{ (e: 'update:show', v: boolean): void }>()
 
-const version = '1.0.0'
+const version = '1.0.1'
 const lang = ref<Locale>(currentLocale())
 const langOptions = [
   { label: '简体中文', value: 'zh-CN' },
