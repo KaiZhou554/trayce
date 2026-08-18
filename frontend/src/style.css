@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+
+--color-taffy-50: #fff1f5;
+--color-taffy-100: #ffe3ea;
+--color-taffy-200: #ffccdc;
+--color-taffy-300: #ffa1bf;
+--color-taffy-400: #ff6699;
+--color-taffy-500: #f93a7f;
+--color-taffy-600: #e7176c;
+--color-taffy-700: #c30d5b;
+--color-taffy-800: #a30e53;
+--color-taffy-900: #8b104d;
+--color-taffy-950: #4e0326;
+
+}
