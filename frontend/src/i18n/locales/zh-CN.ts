@@ -1,8 +1,11 @@
 export default {
   common: {
-    settings: '设置',
+    more: '更多',
     cancel: '取消',
     homepage: '项目主页',
+    minimize: '最小化',
+    maximize: '最大化',
+    close: '关闭',
   },
   search: {
     placeholder: '搜索名称、路径或 ID…',
@@ -43,6 +46,9 @@ export default {
   },
   settings: {
     language: '语言 / Language',
+    notesTitle: '删掉……会发生什么？',
+    noteNotUninstalled: '未卸载的软件：软件下次运行会自己创建',
+    noteRunningApps: '正在运行的软件：软件托盘会被折叠',
     about: '关于',
     description: 'Windows 通知区域图标记录管理器',
   },

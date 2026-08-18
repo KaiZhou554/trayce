@@ -1,5 +1,9 @@
 English | [简体中文](README_zh.md)
 
+<p align="center">
+  <img src="docs/banner.webp" alt="Trayce banner" width="100%">
+</p>
+
 # Trayce (Notification Area Icon Manager)
 
 > A lightweight, modern Windows 11 utility that runs without administrator privileges — view and clean up stale "Other system tray icons" records left in your user account.

@@ -2,7 +2,7 @@
   <n-modal
     :show="show"
     preset="card"
-    :title="t('common.settings')"
+    :title="t('common.more')"
     :bordered="false"
     class="select-none"
     style="width: 420px; max-width: 90vw"
@@ -15,6 +15,17 @@
           {{ t('settings.language') }}
         </div>
         <n-select v-model:value="lang" :options="langOptions" @update:value="onLangChange" />
+      </div>
+
+      <!-- 删除说明 -->
+      <div>
+        <div class="text-sm font-medium text-neutral-700 dark:text-neutral-200 mb-2">
+          {{ t('settings.notesTitle') }}
+        </div>
+        <ul class="text-xs text-neutral-500 dark:text-neutral-400 space-y-1 leading-relaxed">
+          <li>• {{ t('settings.noteNotUninstalled') }}</li>
+          <li>• {{ t('settings.noteRunningApps') }}</li>
+        </ul>
       </div>
 
       <!-- 关于 -->

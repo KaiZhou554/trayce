@@ -1,8 +1,11 @@
 export default {
   common: {
-    settings: 'Settings',
+    more: 'More',
     cancel: 'Cancel',
     homepage: 'Project homepage',
+    minimize: 'Minimize',
+    maximize: 'Maximize',
+    close: 'Close',
   },
   search: {
     placeholder: 'Search name, path or ID…',
@@ -43,6 +46,9 @@ export default {
   },
   settings: {
     language: 'Language',
+    notesTitle: 'What happens if I delete an entry?',
+    noteNotUninstalled: 'Not uninstalled software: it will recreate the entry on its next run',
+    noteRunningApps: 'Running apps: their tray icon will be collapsed',
     about: 'About',
     description: 'Windows notification area icon records manager',
   },

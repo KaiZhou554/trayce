@@ -1,5 +1,9 @@
 [English](README.md) | 简体中文
 
+<p align="center">
+  <img src="docs/banner.webp" alt="Trayce banner" width="100%">
+</p>
+
 # Trayce（通知区域图标管理器）
 
 > 轻量、现代、无管理员权限的 Windows 11 实用工具 —— 查看并清理用户账户下残留的「其他系统托盘图标」记录。

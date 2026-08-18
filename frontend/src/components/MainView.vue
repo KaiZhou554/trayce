@@ -50,12 +50,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useMessage, NButton, NInput, NRadioGroup, NRadioButton } from 'naive-ui'
 import { useI18n } from 'vue-i18n'
-import { WindowMinimise, WindowMaximise, WindowUnmaximise, WindowIsMaximised, Quit } from '../../wailsjs/runtime/runtime'
+import { WindowMinimise, Quit } from '../../wailsjs/runtime/runtime'
 import { Scan, DeleteEntries, UndoLastCleanup } from '../../wailsjs/go/main/App'
 import { Search24Regular, ArrowUndo24Regular } from '@vicons/fluent'
+import { useWindowState } from '../composables/useWindowState'
 import type { IconStatus, TrayIconEntry } from '../types'
 import AppIcon from '../assets/appicon.png'
 import TitleBar from './TitleBar.vue'
@@ -69,11 +70,13 @@ const message = useMessage()
 const all = ref<TrayIconEntry[]>([])
 const query = ref('')
 const filter = ref<'all' | IconStatus>('all')
-const isMaximized = ref(false)
 const settingsOpen = ref(false)
 const selectedIds = ref<Set<string>>(new Set())
 const listRef = ref<InstanceType<typeof TrayIconList> | null>(null)
 const canUndo = ref(true)
+
+// 窗口最大化状态：0.5s 轮询同步（拖动还原等系统手势也能及时更新按钮图标）
+const { isMaximized, startWindowStateSync, stopWindowStateSync, maximize, unmaximize } = useWindowState()
 
 const countOf = (key: string) =>
   key === 'all' ? all.value.length : all.value.filter(e => e.status === key).length
@@ -156,16 +159,18 @@ const onDialogConfirm = async () => {
 
 const toggleMaximize = async () => {
   if (isMaximized.value) {
-    await WindowUnmaximise()
-    isMaximized.value = false
+    await unmaximize()
   } else {
-    await WindowMaximise()
-    isMaximized.value = true
+    await maximize()
   }
 }
 
-onMounted(async () => {
-  isMaximized.value = await WindowIsMaximised()
-  await refresh()
+onMounted(() => {
+  startWindowStateSync(500)
+  refresh()
+})
+
+onUnmounted(() => {
+  stopWindowStateSync()
 })
 </script>

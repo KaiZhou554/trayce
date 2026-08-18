@@ -6,7 +6,7 @@
     <div style="--wails-draggable:no-drag" class="ml-auto flex items-center gap-1">
       <button
         class="dark:text-white w-8 h-8 flex items-center justify-center rounded-sm hover:bg-neutral-400/30 dark:hover:bg-neutral-900/30 active:bg-neutral-400/40 dark:active:bg-neutral-900/40 text-lg leading-none transition-colors"
-        :title="t('common.settings')"
+        :title="t('common.more')"
         @click="$emit('openSettings')"
       >
         <Icon><MoreHorizontal20Regular /></Icon>
@@ -14,14 +14,14 @@
       <button
         @click="$emit('minimize')"
         class="dark:text-white w-12 h-12 flex items-center justify-center hover:bg-neutral-400/50 dark:hover:bg-neutral-900/50 active:bg-neutral-400 dark:active:bg-neutral-900 text-sm transition-colors"
-        title="最小化"
+        :title="t('common.minimize')"
       >
         <Icon><Subtract48Regular /></Icon>
       </button>
       <button
         @click="$emit('maximize')"
         class="dark:text-white w-12 h-12 flex items-center justify-center hover:bg-neutral-400/50 dark:hover:bg-neutral-900/50 active:bg-neutral-400 dark:active:bg-neutral-900 text-sm transition-colors"
-        title="最大化"
+        :title="t('common.maximize')"
       >
         <Icon>
           <component :is="isMaximized ? SquareMultiple24Regular : Tab28Regular" />
@@ -30,7 +30,7 @@
       <button
         @click="$emit('close')"
         class="dark:text-white w-12 h-12 flex items-center justify-center hover:bg-red-500 active:hover:bg-red-500/50 hover:text-white text-sm transition-colors"
-        title="关闭"
+        :title="t('common.close')"
       >
         <Icon><Dismiss48Regular /></Icon>
       </button>
